@@ -84,7 +84,8 @@ class ocs_client extends rest {
                     'path' => PARAM_TEXT, // Could be PARAM_PATH, we really don't want to enforce a Moodle understanding of paths.
                     'shareType' => PARAM_INT,
                     'publicUpload' => PARAM_RAW, // Actually Boolean, but neither String-Boolean ('false') nor PARAM_BOOL (0/1).
-                    'permissions' => PARAM_INT
+                    'permissions' => PARAM_INT,
+                    'expireDate' => PARAM_TEXT
                 ],
                 'response' => 'text/xml'
             ],

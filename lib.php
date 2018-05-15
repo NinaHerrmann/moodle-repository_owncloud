@@ -254,6 +254,7 @@ class repository_owncloud extends repository {
 
     /**
      * Use OCS to generate a public share to the requested file.
+     * It sets a default expiration link of 10 years
      * This method derives a download link from the public share URL.
      *
      * @param string $url relative path to the chosen file
@@ -262,12 +263,16 @@ class repository_owncloud extends repository {
      *
      */
     public function get_link($url) {
+        // Todo this is set to ten years, however an issue will be opened for owncloud to enable endless expireDates
+        $expirationunix = time() + 315569260;
+        $expiration = (string) date('Y-m-d', $expirationunix);
         $ocsparams = [
             'path' => $url,
             'shareType' => ocs_client::SHARE_TYPE_PUBLIC,
             'publicUpload' => false,
-            'permissions' => ocs_client::SHARE_PERMISSION_READ
-            ];
+            'permissions' => ocs_client::SHARE_PERMISSION_READ,
+            'expireDate' => $expiration
+        ];
 
         $response = $this->ocsclient->call('create_share', $ocsparams);
         $xml = simplexml_load_string($response);
